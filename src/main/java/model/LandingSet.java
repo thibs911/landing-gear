@@ -11,7 +11,11 @@ public class LandingSet {
         return state;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public void setState(boolean stateGear, boolean stateDoor) {
+        if(stateGear && stateDoor){
+            this.state = true;
+        }else{
+            this.state = false;
+        }
     }
 }
