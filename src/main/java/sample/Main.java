@@ -6,15 +6,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/sample.fxml"));
 
         primaryStage.setTitle("Landing Gear System");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+
+        try{
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/sample.fxml"));
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        }catch (IOException e){
+
+        }
+
     }
 
 

@@ -6,6 +6,8 @@ package model;
 public class LandingSet {
 
     private boolean state;
+    private LandingGear landingGear;
+    private Door door;
 
     public boolean isState() {
         return state;
@@ -18,4 +20,10 @@ public class LandingSet {
             this.state = false;
         }
     }
+
+    public LandingSet() {
+        this.landingGear = new LandingGear();
+        this.door = new Door();
+    }
+
 }
