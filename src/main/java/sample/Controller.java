@@ -20,22 +20,19 @@ public class Controller extends Observable implements Initializable{
     @FXML private ImageView door2;
     @FXML private ImageView door3;
 
-
     public void initialize(URL location, ResourceBundle resources) {
 
-        Image gearImage = new Image("/img/gear2_retracted.jpg");
-        Image lightImage = new Image("/img/feu_vide.jpg");
-        Image doorImage = new Image("/img/door2_closed.jpg");
+        Image closedDoor = new Image("img/door2_closed.jpg");
+        Image closedGear = new Image("/img/gear2_retracted.jpg");
+        Image light = new Image("/img/feu_vide.jpg");
 
-        ImageViewSettings(lightImage,lights);
-
-        ImageViewSettings(gearImage,gear1);
-        ImageViewSettings(gearImage,gear2);
-        ImageViewSettings(gearImage,gear3);
-
-        ImageViewSettings(doorImage,door1);
-        ImageViewSettings(doorImage,door2);
-        ImageViewSettings(doorImage,door3);
+        ImageViewSettings(closedDoor,door1);
+        ImageViewSettings(closedDoor,door2);
+        ImageViewSettings(closedDoor,door3);
+        ImageViewSettings(closedGear,gear1);
+        ImageViewSettings(closedGear,gear2);
+        ImageViewSettings(closedGear,gear3);
+        ImageViewSettings(light,lights);
     }
 
     private void ImageViewSettings(Image img, ImageView imv)
