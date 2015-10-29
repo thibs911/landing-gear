@@ -21,7 +21,7 @@ public class ToggleSwitch extends HBox {
 
     private void init() {
 
-        label.setText("Close");
+        label.setText("DOWN");
 
         getChildren().addAll(label, button);
         button.setOnAction((e) -> switchedOn.set(!switchedOn.get()));
@@ -49,7 +49,7 @@ public class ToggleSwitch extends HBox {
         init();
         switchedOn.addListener((a,b,c) -> {
             if (c) {
-                label.setText("Open");
+                label.setText("UP");
                 setStyle("-fx-background-color: green;");
                 label.toFront();
             }
