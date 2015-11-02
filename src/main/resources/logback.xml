@@ -1,24 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
-            </Pattern>
-        </layout>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{ISO8601}] [%-5level] %C{3}.%M %m%n</pattern>
+        </encoder>
     </appender>
 
-    <logger name="org.springframework" level="debug" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
+    <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${eureka.logs.directory}/@project.name@-@project.version@.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${eureka.logs.directory}/@project.name@-@project.version@.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>[%d{ISO8601}] [%-5level] [%C{3}.%M] %m%n</pattern>
+        </encoder>
+    </appender>
 
-    <logger name="com.ece.projet" level="debug" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
 
-    <root level="error">
-        <appender-ref ref="STDOUT" />
+    <logger name="org.apache.commons" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.beans.factory.support" level="WARN"/>
+
+    <logger name="LOG4J" level="DEBUG"/>
+    <logger name="SLF4J" level="DEBUG"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="Console"/>
     </root>
 
 </configuration>

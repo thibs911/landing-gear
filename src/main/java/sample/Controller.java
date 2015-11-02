@@ -1,22 +1,20 @@
 package sample;
 
-import javafx.beans.InvalidationListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-
+import service.DigitalPart;
 
 import java.net.URL;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class Controller extends Observable implements Initializable{
+public class Controller implements Initializable, Observer{
     @FXML private ImageView gear1;
     @FXML private ImageView gear2;
     @FXML private ImageView gear3;
@@ -26,7 +24,12 @@ public class Controller extends Observable implements Initializable{
     @FXML private ImageView door3;
     @FXML private GridPane controlGrid;
 
+
+    public DigitalPart digitalPart;
+
     public void initialize(URL location, ResourceBundle resources) {
+
+        this.digitalPart = new DigitalPart();
 
         Image closedDoor = new Image("img/door2_closed.jpg");
         Image closedGear = new Image("/img/gear2_retracted.jpg");
@@ -48,6 +51,10 @@ public class Controller extends Observable implements Initializable{
         controlGrid.setValignment(switchButton, VPos.CENTER);
         controlGrid.setHalignment(switchButton, HPos.CENTER);
 
+        digitalPart.addObserver(this);
+
+
+
     }
 
     private void ImageViewSettings(Image img, ImageView imv)
@@ -60,5 +67,9 @@ public class Controller extends Observable implements Initializable{
     }
 
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 
