@@ -22,8 +22,8 @@ public class LandingSet {
     }
 
     public LandingSet() {
-        this.landingGear = new LandingGear();
-        this.door = new Door();
+        // this.landingGear = new LandingGear();
+       // this.door = new Door();
     }
 
 }

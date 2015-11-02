@@ -1,6 +1,8 @@
 package service;
 
 import com.google.common.collect.Lists;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import model.LandingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,7 @@ import java.util.Observable;
 /**
  * Created by thibs911hotmail.com on 22/10/2015.
  */
-public class DigitalPart extends Observable{
+public class DigitalPart extends Observable implements ChangeListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DigitalPart.class);
 
@@ -35,8 +37,14 @@ public class DigitalPart extends Observable{
 
     public void main(){
      if(!isHandleUp){
-         LandingThread landingSet1 = new LandingThread();
+         LandingThread landingSet1 = new LandingThread(landingSetFront);
          landingSet1.start();
      }
    }
+
+    @Override
+    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+        System.out.println("old : "+oldValue+ "   new: "+newValue);
+    }
 }

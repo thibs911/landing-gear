@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import service.DigitalPart;
-
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,8 +23,8 @@ public class Controller implements Initializable, Observer{
     @FXML private ImageView door3;
     @FXML private GridPane controlGrid;
 
-
     public DigitalPart digitalPart;
+    public ToggleSwitch switchButton;
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -44,7 +43,7 @@ public class Controller implements Initializable, Observer{
         ImageViewSettings(closedGear,gear3);
         ImageViewSettings(light,lights);
 
-        ToggleSwitch switchButton = new ToggleSwitch();
+        switchButton = new ToggleSwitch();
         switchButton.setId("switchBtn");
         switchButton.setMaxSize(200,50);
         controlGrid.add(switchButton, 0, 0);
@@ -52,9 +51,7 @@ public class Controller implements Initializable, Observer{
         controlGrid.setHalignment(switchButton, HPos.CENTER);
 
         digitalPart.addObserver(this);
-
-
-
+        switchButton.addListener(digitalPart);
     }
 
     private void ImageViewSettings(Image img, ImageView imv)
