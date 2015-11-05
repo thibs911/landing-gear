@@ -25,7 +25,7 @@ public class ToggleSwitch extends HBox implements ObservableValue {
 
     private void init() {
 
-        label.setText("DOWN");
+        label.setText("UP");
 
         getChildren().addAll(label, button);
         button.setOnAction((e) -> switchedOn.set(!switchedOn.get()));
@@ -38,7 +38,7 @@ public class ToggleSwitch extends HBox implements ObservableValue {
         //Default Width
         setWidth(80);
         label.setAlignment(Pos.CENTER);
-        setStyle("-fx-background-color: red; -fx-text-fill:black; -fx-background-radius: 4;");
+        setStyle("-fx-background-color: green; -fx-text-fill:black; -fx-background-radius: 4;");
         setAlignment(Pos.CENTER_LEFT);
     }
 
@@ -53,16 +53,16 @@ public class ToggleSwitch extends HBox implements ObservableValue {
         init();
         switchedOn.addListener((a,b,c) -> {
             if (c) {
-                label.setText("UP");
-                setStyle("-fx-background-color: green;");
+                label.setText("DOWN");
+                setStyle("-fx-background-color: red;");
                 label.toFront();
                 for (ChangeListener listener : listeners) {
                     listener.changed(switchedOn,false,true);
                 }
             }
             else {
-                label.setText("DOWN");
-                setStyle("-fx-background-color: grey;");
+                label.setText("UP");
+                setStyle("-fx-background-color: green;");
                 button.toFront();
                 for (ChangeListener listener : listeners) {
                     listener.changed(switchedOn,true, false);

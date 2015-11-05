@@ -31,8 +31,8 @@ public class Controller implements Initializable, Observer{
         this.digitalPart = new DigitalPart();
 
         Image closedDoor = new Image("img/door2_closed.jpg");
-        Image closedGear = new Image("/img/gear2_retracted.jpg");
-        Image light = new Image("/img/feu_vide.jpg");
+        Image closedGear = new Image("/img/gear2_extracted.jpg");
+        Image light = new Image("/img/feu_vert.jpg");
 
         ImageViewSettings(closedDoor,door1);
 
