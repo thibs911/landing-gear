@@ -31,17 +31,22 @@ public class Controller implements Initializable, Observer{
         this.digitalPart = new DigitalPart();
 
         Image closedDoor = new Image("img/door2_closed.jpg");
-        Image closedGear = new Image("/img/gear2_extracted.jpg");
-        Image light = new Image("/img/feu_vert.jpg");
+        Image closedGear = new Image("/img/gear2_retracted.jpg");
+        Image lightEmpty = new Image("/img/feu_vide.jpg");
+        Image openDoor = new Image("img/door2_opened.jpg");
+        Image openGear = new Image("/img/gear2_extracted.jpg");
+        Image lightG = new Image("/img/feu_vert.jpg");
+        Image movingDoor = new Image("img/door2_moving.jpg");
+        Image movingGear = new Image("/img/gear2_moving.jpg");
+        Image lightR = new Image("/img/feu_rouge.jpg");
 
         ImageViewSettings(closedDoor,door1);
-
         ImageViewSettings(closedDoor,door2);
         ImageViewSettings(closedDoor,door3);
-        ImageViewSettings(closedGear,gear1);
-        ImageViewSettings(closedGear,gear2);
-        ImageViewSettings(closedGear,gear3);
-        ImageViewSettings(light,lights);
+        ImageViewSettings(openGear,gear1);
+        ImageViewSettings(openGear,gear2);
+        ImageViewSettings(openGear,gear3);
+        ImageViewSettings(lightG,lights);
 
         switchButton = new ToggleSwitch();
         switchButton.setId("switchBtn");
