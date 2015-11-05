@@ -7,10 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.LandingSet;
 import controller.Controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class Main extends Application {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -23,7 +27,7 @@ public class Main extends Application {
             primaryStage.show();
 
         }catch (IOException e){
-            e.printStackTrace();
+            LOGGER.error(e.getClass()+" : "+e.getMessage());
         }
     }
 

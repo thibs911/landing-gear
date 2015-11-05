@@ -19,32 +19,32 @@ public class DigitalPart extends Observable implements ChangeListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(DigitalPart.class);
 
     private boolean isHandleUp;
-    private LandingSet landingSetFront, landingSetRight, landingSetLeft;
-    private List<LandingSet> landingSetList;
+    private LandingThread landingSetFront, landingSetRight, landingSetLeft;
+    private List<LandingThread> landingSetList;
 
     public DigitalPart() {
 
-        this.landingSetFront = new LandingSet();
-        this.landingSetLeft = new LandingSet();
-        this.landingSetRight = new LandingSet();
+        this.landingSetFront = new LandingThread(new LandingSet());
+        this.landingSetLeft = new LandingThread(new LandingSet());
+        this.landingSetRight = new LandingThread(new LandingSet());
 
         this.landingSetList = Lists.newArrayList(landingSetFront, landingSetLeft, landingSetRight);
 
-        LOGGER.debug("CrÃ©ation des {} trains d'atterissage {} : ", landingSetList.size(), landingSetList);
-
-
+        LOGGER.debug("Creation of  {} LandingSet {} : ", landingSetList.size(), landingSetList);
     }
-
-    public void main(){
-     if(!isHandleUp){
-         LandingThread landingSet1 = new LandingThread(landingSetFront);
-         landingSet1.start();
-     }
-   }
 
     @Override
     public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-        System.out.println("old : "+oldValue+ "   new: "+newValue);
+        LOGGER.debug("old : {} || new : {}", oldValue, newValue);
+
+        Boolean handleState = Boolean.getBoolean(newValue.toString());
+
+        /**
+         * Cas où la manette est en position Down
+         */
+        if(handleState != true){
+
+        }
     }
 }

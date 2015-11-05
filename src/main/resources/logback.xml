@@ -7,9 +7,9 @@
     </appender>
 
     <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${eureka.logs.directory}/@project.name@-@project.version@.log</file>
+        <file>/@project.name@-@project.version@.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>${eureka.logs.directory}/@project.name@-@project.version@.%i.log</fileNamePattern>
+            <fileNamePattern>/@project.name@-@project.version@.%i.log</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>5</maxIndex>
         </rollingPolicy>

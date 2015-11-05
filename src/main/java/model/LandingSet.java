@@ -6,24 +6,24 @@ package model;
 public class LandingSet {
 
     private boolean state;
-    private LandingGear landingGear;
-    private Door door;
+    protected LandingGear landingGear;
+    protected Door door;
 
     public boolean isState() {
         return state;
     }
 
     public void setState(boolean stateGear, boolean stateDoor) {
-        if(stateGear && stateDoor){
+        if (stateGear && stateDoor) {
             this.state = true;
-        }else{
+        } else {
             this.state = false;
         }
     }
 
     public LandingSet() {
-        // this.landingGear = new LandingGear();
-       // this.door = new Door();
+        this.landingGear = new LandingGear();
+        this.door = new Door();
     }
 
 }

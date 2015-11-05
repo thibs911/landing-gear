@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import java.util.ArrayList;
 
 /**
- * Created by Clément on 28/10/2015.
+ * Created by Clï¿½ment on 28/10/2015.
  */
 public class ToggleSwitch extends HBox implements ObservableValue {
 
@@ -25,7 +25,7 @@ public class ToggleSwitch extends HBox implements ObservableValue {
 
     private void init() {
 
-        label.setText("UP");
+        label.setText("DOWN");
 
         getChildren().addAll(label, button);
         button.setOnAction((e) -> switchedOn.set(!switchedOn.get()));
@@ -38,7 +38,7 @@ public class ToggleSwitch extends HBox implements ObservableValue {
         //Default Width
         setWidth(80);
         label.setAlignment(Pos.CENTER);
-        setStyle("-fx-background-color: green; -fx-text-fill:black; -fx-background-radius: 4;");
+        setStyle("-fx-background-color: red; -fx-text-fill:black; -fx-background-radius: 4;");
         setAlignment(Pos.CENTER_LEFT);
     }
 

@@ -35,7 +35,7 @@ public class Controller implements Initializable, Observer{
         Image lightEmpty = new Image("/img/feu_vide.jpg");
         Image openDoor = new Image("img/door2_opened.jpg");
         Image openGear = new Image("/img/gear2_extracted.jpg");
-        Image lightG = new Image("/img/feu_vert.jpg");
+        Image lightG = new Image("/img/feu_vide.jpg");
         Image movingDoor = new Image("img/door2_moving.jpg");
         Image movingGear = new Image("/img/gear2_moving.jpg");
         Image lightR = new Image("/img/feu_rouge.jpg");
