@@ -1,4 +1,4 @@
-package sample;
+package controller;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Clément on 28/10/2015.
