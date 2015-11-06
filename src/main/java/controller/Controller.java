@@ -1,5 +1,7 @@
 package controller;
 
+import com.google.common.collect.Lists;
+import exception.LandingException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -8,13 +10,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.LandingSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.DigitalPart;
 import java.net.URL;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable, Observer{
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+
+
     @FXML private ImageView gear1;
     @FXML private ImageView gear2;
     @FXML private ImageView gear3;
@@ -34,6 +43,8 @@ public class Controller implements Initializable, Observer{
     private Image movingGear;
     private Image lightR;
     private Image lightO;
+
+    private List<LandingSet> landingSetList = Lists.newArrayList();
 
     public DigitalPart digitalPart;
     public ToggleSwitch switchButton;
@@ -91,13 +102,25 @@ public class Controller implements Initializable, Observer{
         LandingSet landingSet = (LandingSet) o;
         switch(landingSet.getName()){
             case "landingSetFront" :
-                changeGearAndDoorMovement(landingSet, gear1, door1);
+                try {
+                    changeGearAndDoorMovement(landingSet, gear1, door1);
+                } catch (LandingException e) {
+                    LOGGER.error(e.getMessage());
+                }
                 break;
             case "landingSetRight" :
-                changeGearAndDoorMovement(landingSet, gear2, door2);
+                try {
+                    changeGearAndDoorMovement(landingSet, gear2, door2);
+                } catch (LandingException e) {
+                    LOGGER.error(e.getMessage());
+                }
                 break;
             case "landingSetLeft" :
-                changeGearAndDoorMovement(landingSet, gear3, door3);
+                try {
+                    changeGearAndDoorMovement(landingSet, gear3, door3);
+                } catch (LandingException e) {
+                    LOGGER.error(e.getMessage());
+                }
                 break;
             default:
                 throw new IllegalArgumentException("LandingSet inconnu");
@@ -109,7 +132,7 @@ public class Controller implements Initializable, Observer{
         imageView.setImage(image);
     }
 
-    public void changeGearAndDoorMovement(LandingSet landingSet, ImageView gear, ImageView door){
+    public void changeGearAndDoorMovement(LandingSet landingSet, ImageView gear, ImageView door) throws LandingException {
         switch(landingSet.getStatus()){
             case DOOR_IN_MOVEMENT:
                 changeImage(door, movingDoor);
@@ -124,23 +147,48 @@ public class Controller implements Initializable, Observer{
                 changeImage(gear, movingGear);
                 break;
             case RETRACTED:
-                changeImage(gear, closedGear);
+                landingSetList.add(landingSet);
+                if(!landingSet.getLandingGear().isSensor())
+                    changeImage(gear, closedGear);
                 break;
             case EXTRACTED:
+                landingSetList.add(landingSet);
+                if(landingSet.getLandingGear().isSensor())
                 changeImage(gear, openGear);
-                break;
-            case BLOCKED:
-                changeImage(lights, lightR);
-                break;
+                    break;
             case GLOBAL_MOVEMENT:
                 changeImage(lights, lightO);
                 break;
             case SUCCESS:
-                changeImage(lights, lightG);
+                if(landingSetList.size() == 3){
+                    if(checkIfOk()){
+                        changeImage(lights, lightG);
+                    }else{
+                        changeImage(lights, lightR);
+                        throw new LandingException("Erreur Système");
+                    }
+                }
                 break;
+
             default: throw new IllegalArgumentException("Option non disponible");
         }
 
+    }
+
+    public boolean checkIfOk(){
+        boolean flag = true;
+        Boolean sensor = null;
+        for(LandingSet currentLandingSet : landingSetList){
+            if(sensor == null){
+                sensor = currentLandingSet.getCurrentState();
+            }else{
+                if(sensor != currentLandingSet.getCurrentState()){
+                    flag = false;
+                }
+            }
+        }
+        landingSetList.clear();
+        return flag;
     }
 }
 

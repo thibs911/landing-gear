@@ -81,8 +81,8 @@ public class LandingSet extends Observable {
                             @Override
                             public void run() {
                                 LOGGER.debug("{} : Gear retracted", name);
-                                setStatus(Status.RETRACTED);
                                 setGearExtractRetract(false);
+                                setStatus(Status.RETRACTED);
                                 Timer fourthStepTimer = new Timer();
                                 fourthStepTimer.schedule(new TimerTask() {
                                     @Override
@@ -137,8 +137,8 @@ public class LandingSet extends Observable {
                             @Override
                             public void run() {
                                 LOGGER.debug("{} : Gear extracted", name);
-                                setStatus(Status.EXTRACTED);
                                 setGearExtractRetract(true);
+                                setStatus(Status.EXTRACTED);
 
                                 Timer fourthStepTimer = new Timer();
                                 fourthStepTimer.schedule(new TimerTask() {
