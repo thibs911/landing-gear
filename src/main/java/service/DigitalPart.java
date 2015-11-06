@@ -37,14 +37,21 @@ public class DigitalPart extends Observable implements ChangeListener {
     public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
         LOGGER.debug("old : {} || new : {}", oldValue, newValue);
-
-        Boolean handleState = Boolean.getBoolean(newValue.toString());
-
+        Boolean isDown = ((Boolean) newValue).booleanValue();
         /**
-         * Cas o� la manette est en position Down
+         * Cas ou la manette est en position Down
          */
-        if(handleState != true){
-
+        if(isDown){
+            LOGGER.debug("La manette a ete abaissée");
+            setChanged();
+            notifyObservers();
+        }
+        /**
+         * Cas ou la manette est en position Down
+         */
+        if(!isDown)
+        {
+            LOGGER.debug("La manette a ete levée");
         }
     }
 }
