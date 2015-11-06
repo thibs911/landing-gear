@@ -162,11 +162,16 @@ public class Controller implements Initializable, Observer{
             case SUCCESS:
                 if(landingSetList.size() == 3){
                     if(checkIfOk()){
-                        changeImage(lights, lightG);
+                        if(landingSetList.get(0).getLandingGear().isSensor()){
+                            changeImage(lights, lightG);
+                        }else{
+                            changeImage(lights, lightEmpty);
+                        }
                     }else{
                         changeImage(lights, lightR);
                         throw new LandingException("Erreur Système");
                     }
+                    landingSetList.clear();
                 }
                 break;
 
@@ -187,7 +192,6 @@ public class Controller implements Initializable, Observer{
                 }
             }
         }
-        landingSetList.clear();
         return flag;
     }
 }

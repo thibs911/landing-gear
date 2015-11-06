@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
  */
 public class DigitalPartTest {
 
-
     @Test
     public void extractGearAndDoors() throws InterruptedException {
         DigitalPart digitalPart = new DigitalPart();
@@ -21,7 +20,6 @@ public class DigitalPartTest {
         landingSet.openDoorsAndExtractGear();
         Thread.sleep(15000);
         assertEquals(true, landingSet.getCurrentState());
-
     }
 
     @Test
@@ -30,14 +28,10 @@ public class DigitalPartTest {
         DigitalPart digitalPart = new DigitalPart();
 
         LandingSet landingSet =  digitalPart.getLandingSetList().get(0);
-
-
         assertEquals(true, landingSet.getCurrentState());
 
         landingSet.openDoorsAndRetractGear();
         Thread.sleep(15000);
         assertEquals(false, landingSet.getCurrentState());
-
-
     }
 }
