@@ -20,17 +20,19 @@ public class DigitalPart extends Observable implements ChangeListener {
 
     private boolean isHandleUp;
     private LandingThread landingSetFront, landingSetRight, landingSetLeft;
-    private List<LandingThread> landingSetList;
+
+
+    private List<LandingThread> landingThreadList;
 
     public DigitalPart() {
 
-        this.landingSetFront = new LandingThread(new LandingSet());
-        this.landingSetLeft = new LandingThread(new LandingSet());
-        this.landingSetRight = new LandingThread(new LandingSet());
+        this.landingSetFront = new LandingThread(new LandingSet("landingSetFront"));
+        this.landingSetLeft = new LandingThread(new LandingSet("landingSetLeft"));
+        this.landingSetRight = new LandingThread(new LandingSet("landingSetRight"));
 
-        this.landingSetList = Lists.newArrayList(landingSetFront, landingSetLeft, landingSetRight);
+        this.landingThreadList = Lists.newArrayList(landingSetFront, landingSetLeft, landingSetRight);
 
-        LOGGER.debug("Creation of  {} LandingSet {} : ", landingSetList.size(), landingSetList);
+        LOGGER.debug("Creation of  {} LandingSet {} : ", landingThreadList.size(), landingThreadList);
     }
 
     @Override
@@ -38,13 +40,70 @@ public class DigitalPart extends Observable implements ChangeListener {
 
         LOGGER.debug("old : {} || new : {}", oldValue, newValue);
 
-        Boolean handleState = Boolean.getBoolean(newValue.toString());
+        Boolean handleState = Boolean.valueOf(newValue.toString());
 
         /**
-         * Cas o� la manette est en position Down
+         * Cas où la manette est en position Down
          */
-        if(handleState != true){
+        if (handleState != true) {
 
+            LOGGER.debug("Procédure d'extractation des Gears enclenchée");
+
+            if (!checkIfGearIsExtracted()) {
+                for (LandingThread thread : landingThreadList) {
+                    thread.setMovement(true);
+                    checkIfThreadAlreadyStarted(thread);
+                }
+            }
+        } else {
+            /**
+             * Manette en position UP, on vérifie que les roues sont bien extraites en premier
+             */
+            LOGGER.debug("Procédure de rétractation des Gears enclenchée");
+
+            if (checkIfGearIsExtracted()) {
+
+                for (LandingThread thread : landingThreadList) {
+                    thread.setMovement(false);
+                    checkIfThreadAlreadyStarted(thread);
+                }
+
+            } else if (checkIfGearIsExtracted() == null) {
+
+            }
+
+        }
+    }
+
+
+    protected Boolean checkIfGearIsExtracted() {
+        Boolean check = false;
+        for (LandingThread landingThread : landingThreadList) {
+            check = landingThread.getLandingSet().getCurrentState();
+            if (!check) {
+                return false;
+            } else if (check == null) {
+                return null;
+            }
+        }
+        LOGGER.debug("checkIfGearIsExtracted {}", check);
+
+        return check;
+    }
+
+    public List<LandingSet> getLandingSetList() {
+        List<LandingSet> landingSetList = Lists.newArrayList();
+        for (LandingThread thread : landingThreadList) {
+            landingSetList.add(thread.getLandingSet());
+        }
+        return landingSetList;
+    }
+
+    public void checkIfThreadAlreadyStarted(LandingThread thread){
+        if(thread.currentThread().isAlive()){
+            thread.run();
+        }else{
+            thread.start();
         }
     }
 }

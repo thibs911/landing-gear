@@ -13,7 +13,25 @@ public class LandingThread extends Thread {
         this.landingSet = landingSet;
     }
 
-    public void run(){
+    /**
+     * movement permet de savoir qu'elle ordre faire passer aux hydrauliques : false = on veut remonter les roues
+     * true = on veut descendre les roues
+     */
+    private boolean movement;
 
+    public void run(){
+        if(movement){
+            landingSet.extractGear();
+        }else{
+            landingSet.retractGear();
+        }
+    }
+
+    public LandingSet getLandingSet() {
+        return landingSet;
+    }
+
+    public void setMovement(boolean movement) {
+        this.movement = movement;
     }
 }

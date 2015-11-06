@@ -52,7 +52,7 @@ public class ToggleSwitch extends HBox implements ObservableValue {
     public ToggleSwitch() {
         init();
         switchedOn.addListener((a,b,c) -> {
-            if (c) {
+            if (!c) {
                 label.setText("DOWN");
                 setStyle("-fx-background-color: red;");
                 label.toFront();
