@@ -2,8 +2,6 @@ package model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import thread.LandingThread;
-
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,17 +12,12 @@ import java.util.TimerTask;
 public class LandingSet extends Observable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LandingSet.class);
-
-
-    private boolean state;
-    protected LandingGear landingGear;
-    protected Door door;
+    
+    private LandingGear landingGear;
+    private Door door;
     private Status status;
     private String name;
 
-    public boolean isState() {
-        return state;
-    }
 
     public void setStatus(Status status){
         this.status=status;
@@ -74,7 +67,7 @@ public class LandingSet extends Observable {
             public void run() {
                 LOGGER.debug("{} : Portes ouvertes", name);
                 setStatus(Status.DOOR_OPENED);
-                door.setSensor(true);
+                setDoorOpenClose(true);
 
                 Timer secondStepTimer = new Timer();
                 secondStepTimer.schedule(new TimerTask() {
@@ -89,7 +82,7 @@ public class LandingSet extends Observable {
                             public void run() {
                                 LOGGER.debug("{} : Gear retracted", name);
                                 setStatus(Status.RETRACTED);
-                                landingGear.setSensor(false);
+                                setGearExtractRetract(false);
                                 Timer fourthStepTimer = new Timer();
                                 fourthStepTimer.schedule(new TimerTask() {
                                     @Override
@@ -104,7 +97,7 @@ public class LandingSet extends Observable {
                                                 LOGGER.debug("{} : Portes fermées", name);
                                                 setStatus(Status.DOOR_CLOSED);
                                                 setStatus(Status.SUCCESS);
-                                                door.setSensor(false);
+                                                setDoorOpenClose(false);
                                             }
                                         }, 2000);
                                     }
@@ -130,7 +123,7 @@ public class LandingSet extends Observable {
                 LOGGER.debug("{} : Portes ouvertes", name);
 
                 setStatus(Status.DOOR_OPENED);
-                door.setSensor(true);
+                setDoorOpenClose(true);
 
                 Timer secondStepTimer = new Timer();
                 secondStepTimer.schedule(new TimerTask() {
@@ -145,7 +138,7 @@ public class LandingSet extends Observable {
                             public void run() {
                                 LOGGER.debug("{} : Gear extracted", name);
                                 setStatus(Status.EXTRACTED);
-                                landingGear.setSensor(true);
+                                setGearExtractRetract(true);
 
                                 Timer fourthStepTimer = new Timer();
                                 fourthStepTimer.schedule(new TimerTask() {
@@ -161,7 +154,7 @@ public class LandingSet extends Observable {
                                                 LOGGER.debug("{} : Portes fermées", name);
                                                 setStatus(Status.DOOR_CLOSED);
                                                 setStatus(Status.SUCCESS);
-                                                door.setSensor(false);
+                                                setDoorOpenClose(false);
                                             }
                                         }, 2000);
                                     }
@@ -173,9 +166,34 @@ public class LandingSet extends Observable {
                 }, 2000);
             }
         }, 2000);
+
     }
 
     public String getName() {
         return name;
+    }
+
+    public Door getDoor() {
+        return door;
+    }
+
+    public void setDoor(Door door) {
+        this.door = door;
+    }
+
+    public LandingGear getLandingGear() {
+        return landingGear;
+    }
+
+    public void setLandingGear(LandingGear landingGear) {
+        this.landingGear = landingGear;
+    }
+    
+    public void setDoorOpenClose(boolean boo){
+        this.door.setSensor(boo);
+    }
+    
+    public void setGearExtractRetract(boolean boo){
+        this.landingGear.setSensor(boo);
     }
 }
