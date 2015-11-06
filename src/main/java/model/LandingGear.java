@@ -3,6 +3,10 @@ package model;
 /**
  * Created by thibs911hotmail.com on 22/10/2015.
  */
+
+/**
+ * Correspond au train d'atterissage d'un LandingSet
+ */
 public class LandingGear {
 
 

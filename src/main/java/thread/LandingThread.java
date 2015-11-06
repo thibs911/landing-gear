@@ -5,6 +5,11 @@ import model.LandingSet;
 /**
  * Created by thibs911hotmail.com on 27/10/2015.
  */
+
+/**
+ * Thread de chacun des LandingSet
+ * En fonction du mouvement de la manette, on appelle la procédure correspondante
+ */
 public class LandingThread extends Thread {
 
     private LandingSet landingSet;

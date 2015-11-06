@@ -14,6 +14,10 @@ import java.util.ArrayList;
 /**
  * Created by Cl�ment on 28/10/2015.
  */
+
+/**
+ * Bouton Switch custom qui permet de mettre la manette en UP ou DOWN
+ */
 public class ToggleSwitch extends HBox implements ObservableValue {
 
     private ArrayList<ChangeListener> listeners = new ArrayList<>();
@@ -23,6 +27,9 @@ public class ToggleSwitch extends HBox implements ObservableValue {
     protected SimpleBooleanProperty switchedOn = new SimpleBooleanProperty(false);
     public SimpleBooleanProperty switchOnProperty() { return switchedOn; }
 
+    /**
+     * On initialise le bouton à DOWN car l'on suppose que l'avion est sol lors de l'initialisation de l'application
+     */
     private void init() {
 
         label.setText("DOWN");

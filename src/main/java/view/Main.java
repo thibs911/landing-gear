@@ -12,6 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+/**
+ * Classe de démarrage de l'application
+ * On récupère le fxml contenant les différents composants de l'interface graphique
+ */
 public class Main extends Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);

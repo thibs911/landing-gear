@@ -9,6 +9,12 @@ import java.util.TimerTask;
 /**
  * Created by thibs911hotmail.com on 22/10/2015.
  */
+
+/**
+ * Un landingSet est considéré comme l'ensemble du train d'atterrissage (landingGear) + les volets (Door)
+ * LandingSet est en Observable avec le Controller, et notifie à ce dernier lors d'un changement de Statut
+ * (mouvement, fermeture, ...)
+ */
 public class LandingSet extends Observable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LandingSet.class);
@@ -18,7 +24,10 @@ public class LandingSet extends Observable {
     private Status status;
     private String name;
 
-
+    /**
+     * Set le Statut actuel du LandingGear et notifie le controller qui est Observer
+     * @param status
+     */
     public void setStatus(Status status){
         this.status=status;
         setChanged();
@@ -35,6 +44,10 @@ public class LandingSet extends Observable {
         this.name = name;
     }
 
+    /**
+     * Permet de savoir si le landingGear est extrait ou rétracté
+     * @return
+     */
     public Boolean getCurrentState(){
         if(!this.door.isSensor()){
             if(this.landingGear.isSensor()){
@@ -47,15 +60,28 @@ public class LandingSet extends Observable {
         }
     }
 
+    /**
+     * Fonction qui démarre la procédure de rétractation des gears
+     */
     public void retractGear(){
         LOGGER.debug("{} : rétractation du Gear", name);
         openDoorsAndRetractGear();
     }
+
+    /**
+     * Fonction qui démarre la procédure d'extraction des gears
+     */
     public void extractGear(){
         LOGGER.debug("{} : extraction du Gear", name);
         openDoorsAndExtractGear();
     }
 
+    /**
+     * Cette fonction à l'aide de Timer (pour espacer dans le temps les étapes) réalise les différentes étapes de
+     * la procédure de rétractation
+     * Ouverture des portes, remontée du train d'atterissage, fermetures des portes.
+     * On notifie à chaque l'observer à chaque étaê
+     */
     public void openDoorsAndRetractGear(){
         LOGGER.debug("{} : Portes en mouvement", name);
         setStatus(Status.GLOBAL_MOVEMENT);
@@ -111,6 +137,12 @@ public class LandingSet extends Observable {
         }, 2000);
     }
 
+    /**
+     * Cette fonction à l'aide de Timer (pour espacer dans le temps les étapes) réalise les différentes étapes de
+     * la procédure d'extraction
+     * Ouverture des portes, extraction du train d'atterissage, fermetures des portes.
+     * On notifie à chaque l'observer à chaque étaê
+     */
     public void openDoorsAndExtractGear(){
         LOGGER.debug("{} : Portes en mouvement", name);
         setStatus(Status.GLOBAL_MOVEMENT);

@@ -14,6 +14,11 @@ import java.util.Observable;
 /**
  * Created by thibs911hotmail.com on 22/10/2015.
  */
+
+/**
+ * DigitalPart est un observable, elle permet de gérer les 3 threads des landingSet
+ * Elle vérifie la position de la manette pour savoir qu'elle procédure l'utilisateur souhaite réaliser
+ */
 public class DigitalPart extends Observable implements ChangeListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DigitalPart.class);
@@ -24,6 +29,9 @@ public class DigitalPart extends Observable implements ChangeListener {
 
     private List<LandingThread> landingThreadList;
 
+    /**
+     * On instancie lors du constructeur les 3 threads qui contiennet chacun un LandingSet
+     */
     public DigitalPart() {
 
         this.landingSetFront = new LandingThread(new LandingSet("landingSetFront"));
@@ -35,6 +43,12 @@ public class DigitalPart extends Observable implements ChangeListener {
         LOGGER.debug("Creation of  {} LandingSet {} : ", landingThreadList.size(), landingThreadList);
     }
 
+    /**
+     * On récupère ici la valeur de boutonSwitch pour savoir si il est position UP ou DOWN
+     * @param observable
+     * @param oldValue
+     * @param newValue
+     */
     @Override
     public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
@@ -75,7 +89,10 @@ public class DigitalPart extends Observable implements ChangeListener {
         }
     }
 
-
+    /**
+     * Vérifie si le thread d'un gear a déjà été démarré (exemple lors de l'initialisation)
+     * @return
+     */
     protected Boolean checkIfGearIsExtracted() {
         Boolean check = false;
         for (LandingThread landingThread : landingThreadList) {

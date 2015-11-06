@@ -19,10 +19,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
+/**
+ * Controller est la classe Observer de l'application
+ * Elle observe les différents composants et vérifie les états des landingGear.
+ */
 public class Controller implements Initializable, Observer{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
-
 
     @FXML private ImageView gear1;
     @FXML private ImageView gear2;
@@ -49,6 +52,12 @@ public class Controller implements Initializable, Observer{
     public DigitalPart digitalPart;
     public ToggleSwitch switchButton;
 
+    /**
+     * Fonction de démarrage des composants graphiques
+     * Par défaut les landingGear sont descendues car l'on suppose que l'avion est au sol.
+     * @param location
+     * @param resources
+     */
     public void initialize(URL location, ResourceBundle resources) {
 
         this.digitalPart = new DigitalPart();
@@ -64,13 +73,13 @@ public class Controller implements Initializable, Observer{
         lightR = new Image("/img/feu_rouge.jpg");
         lightO = new Image("/img/feu_orange.jpg");
 
-        ImageViewSettings(closedDoor,door1);
-        ImageViewSettings(closedDoor,door2);
-        ImageViewSettings(closedDoor,door3);
-        ImageViewSettings(openGear,gear1);
-        ImageViewSettings(openGear,gear2);
-        ImageViewSettings(openGear,gear3);
-        ImageViewSettings(lightEmpty,lights);
+        imageViewSettings(closedDoor, door1);
+        imageViewSettings(closedDoor, door2);
+        imageViewSettings(closedDoor, door3);
+        imageViewSettings(openGear, gear1);
+        imageViewSettings(openGear, gear2);
+        imageViewSettings(openGear, gear3);
+        imageViewSettings(lightEmpty, lights);
 
         switchButton = new ToggleSwitch();
         switchButton.setId("switchBtn");
@@ -79,7 +88,6 @@ public class Controller implements Initializable, Observer{
         controlGrid.setValignment(switchButton, VPos.CENTER);
         controlGrid.setHalignment(switchButton, HPos.CENTER);
 
-
         digitalPart.addObserver(this);
         switchButton.addListener(digitalPart);
         for (LandingSet landingSet : digitalPart.getLandingSetList()){
@@ -87,7 +95,12 @@ public class Controller implements Initializable, Observer{
         }
     }
 
-    private void ImageViewSettings(Image img, ImageView imv)
+    /**
+     * Initialisation des images
+     * @param img
+     * @param imv
+     */
+    private void imageViewSettings(Image img, ImageView imv)
     {
         imv.setImage(img);
         imv.setFitWidth(200);
@@ -96,7 +109,12 @@ public class Controller implements Initializable, Observer{
         imv.setCache(true);
     }
 
-
+    /**
+     * Fonction de l'Observer qui attend les notifications des Observables
+     * On récupère à chaque fois le landingset qui à notifier le controller et on regarde le statut
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         LandingSet landingSet = (LandingSet) o;
@@ -128,10 +146,24 @@ public class Controller implements Initializable, Observer{
 
     }
 
+    /**
+     * Permet de changer à chaud les images
+     * @param imageView
+     * @param image
+     */
     public void changeImage(ImageView imageView, Image image){
         imageView.setImage(image);
     }
 
+    /**
+     * Cette fonction associe au statut des LandingSet le changement d'images correspondant.
+     * Dans le cas SUCCESS, on vérifie auparavant que les 3 LandingSet sont identiques au niveau des SENSOR
+     * En cas d'erreur, on remonte une erreur
+     * @param landingSet : LandingSet
+     * @param gear : LandingGear
+     * @param door : Portes
+     * @throws LandingException
+     */
     public void changeGearAndDoorMovement(LandingSet landingSet, ImageView gear, ImageView door) throws LandingException {
         switch(landingSet.getStatus()){
             case DOOR_IN_MOVEMENT:
@@ -174,12 +206,15 @@ public class Controller implements Initializable, Observer{
                     landingSetList.clear();
                 }
                 break;
-
-            default: throw new IllegalArgumentException("Option non disponible");
+            default: throw new LandingException("Option non disponible");
         }
-
     }
 
+    /**
+     * On vérifie ici que nos 3 LandingSets ont bien les sensors de leur landingGear à la même valeur
+     * Si l'un est différent, on considère qu'il y a eu une erreur
+     * @return
+     */
     public boolean checkIfOk(){
         boolean flag = true;
         Boolean sensor = null;
