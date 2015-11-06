@@ -7,9 +7,9 @@
     </appender>
 
     <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/@project.name@-@project.version@.log</file>
+        <file>/com.ece.projet-landing-gear.1.0-SNAPSHOT.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>/@project.name@-@project.version@.%i.log</fileNamePattern>
+            <fileNamePattern>/com.ece.projet-landing-gear.1.0-SNAPSHOT.%i.log</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>5</maxIndex>
         </rollingPolicy>
